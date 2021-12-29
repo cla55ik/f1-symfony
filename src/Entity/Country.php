@@ -24,10 +24,14 @@ class Country
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Comand::class)]
     private $comand;
 
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Races::class)]
+    private $races;
+
     public function __construct()
     {
         $this->pilot = new ArrayCollection();
         $this->comand = new ArrayCollection();
+        $this->races = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class Country
             // set the owning side to null (unless already changed)
             if ($comand->getCountry() === $this) {
                 $comand->setCountry(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Races[]
+     */
+    public function getRaces(): Collection
+    {
+        return $this->races;
+    }
+
+    public function addRace(Races $race): self
+    {
+        if (!$this->races->contains($race)) {
+            $this->races[] = $race;
+            $race->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRace(Races $race): self
+    {
+        if ($this->races->removeElement($race)) {
+            // set the owning side to null (unless already changed)
+            if ($race->getCountry() === $this) {
+                $race->setCountry(null);
             }
         }
 
