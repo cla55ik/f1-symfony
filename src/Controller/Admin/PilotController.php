@@ -12,24 +12,27 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+#[Route('admin/pilot', name: 'admin_pilot')]
 class PilotController extends AbstractController
 {
-    #[Route('/admin/pilot', name: 'admin_pilot')]
-    public function index(): Response
+    #[Route('', name: '')]
+    public function index(PilotRepository $pilotRepository): Response
     {
-        return $this->render('pilot/index.html.twig', [
-            'controller_name' => 'PilotController',
+        $pilots = $pilotRepository->findAll();
+        return $this->render('admin/pilot/index.html.twig', [
+            'pilots'=>$pilots
         ]);
     }
 
-    #[Route('/admin/pilot/{id}', name: 'admin_get_pilot', requirements: ['id'=>'\d+'])]
+    #[Route('/{id}', name: '_get', requirements: ['id'=>'\d+'])]
     public function getPilot($id, PilotRepository $pilotRepository)
     {
         $pilot = $pilotRepository->find($id);
 //        return $this->render()
     }
 
-    #[Route('admin/pilot/create', name: 'admin_pilot_create')]
+    #[Route('/create', name: '_create')]
     public function createPilot(PilotFormType $pilotFormType, Request $request, EntityManagerInterface $entityManager): Response
     {
         $pilot = new Pilot();
@@ -45,5 +48,30 @@ class PilotController extends AbstractController
         return $this->render('admin/pilot/create.html.twig', [
             'form'=>$form->createView()
         ]);
+    }
+
+    #[Route('/update/{id}', name: '_update')]
+    public function updatePilot($id, PilotRepository $pilotRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $pilot = $pilotRepository->find($id);
+        $form = $this->createForm(PilotFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+
+            $pilot->setName($data->getName());
+            $pilot->setSurname($data->getSurname());
+            $pilot->setComand($data->getComand());
+            $pilot->setCountry($data->getCountry());
+
+            $entityManager->persist($pilot);
+            $entityManager->flush();
+        }
+
+        return $this->render('admin/pilot/update.html.twig', [
+            'form'=>$form->createView()
+        ]);
+
     }
 }
