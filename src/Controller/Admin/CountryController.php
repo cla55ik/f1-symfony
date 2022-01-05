@@ -28,7 +28,6 @@ class CountryController extends AbstractController
     public function createCountry(Request $request, EntityManagerInterface $entityManager, FileUploadService $fileUploadService): Response
     {
         //TODO: проверка на Admin
-        //TODO: проверка на Существование записи с таким Названием
         $country = new Country();
         $form = $this->createForm(CountryFormType::class, $country);
 
