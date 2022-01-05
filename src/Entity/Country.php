@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
 {
+    const IMG_UPLOAD_DIR = 'uploads/country';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -26,6 +27,9 @@ class Country
 
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Races::class)]
     private $races;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $img;
 
     public function __construct()
     {
@@ -142,6 +146,18 @@ class Country
                 $race->setCountry(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
 
         return $this;
     }

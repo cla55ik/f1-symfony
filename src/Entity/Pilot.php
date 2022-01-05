@@ -36,6 +36,9 @@ class Pilot
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $img;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $number;
+
     public function __construct()
     {
         $this->statistics = new ArrayCollection();
@@ -132,6 +135,18 @@ class Pilot
     public function setImg(?string $img): self
     {
         $this->img = $img;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(?int $number): self
+    {
+        $this->number = $number;
 
         return $this;
     }
