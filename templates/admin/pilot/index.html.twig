@@ -9,6 +9,9 @@
     </style>
 
     <div class="example-wrapper">
+        <div>
+            <a href="{{ path('admin_pilot_create') }}">create</a>
+        </div>
         <table>
             <tr>
                 <th>name</th>
@@ -24,6 +27,7 @@
                     <td>{{ pilot.comand }}</td>
                     <td>{{ pilot.country }}</td>
                     <td><a href="{{ path('admin_pilot_update', {'id':pilot.id}) }}">update</a></td>
+                    <td><a href="{{ path('admin_pilot_delete', {'id':pilot.id}) }}">delete</a></td>
                 </tr>
             {% endfor %}
         </table>

@@ -74,4 +74,14 @@ class PilotController extends AbstractController
         ]);
 
     }
+
+    #[Route('/delete/{id}', name: '_delete')]
+    public function deletePilot($id, PilotRepository $pilotRepository, EntityManagerInterface $entityManager): Response
+    {
+        $pilot = $pilotRepository->find($id);
+        $entityManager->remove($pilot);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_pilot');
+    }
 }
