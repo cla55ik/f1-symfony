@@ -14,6 +14,7 @@
         </div>
         <table>
             <tr>
+                <th>image</th>
                 <th>name</th>
                 <th>surname</th>
                 <th>team</th>
@@ -22,6 +23,7 @@
             </tr>
             {% for pilot in pilots %}
                 <tr>
+                    <td><img src="{{ asset(constant('App\\Entity\\Pilot::IMG_UPLOAD_DIR') ~ '/' ~ pilot.img) }}"></td>
                     <td>{{ pilot.name }}</td>
                     <td>{{ pilot.surname }}</td>
                     <td>{{ pilot.comand }}</td>

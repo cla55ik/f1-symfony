@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PilotRepository::class)]
 class Pilot
 {
+    const IMG_UPLOAD_DIR = 'uploads/pilot';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -30,6 +32,9 @@ class Pilot
 
     #[ORM\OneToMany(mappedBy: 'pilot', targetEntity: Statistics::class)]
     private $statistics;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $img;
 
     public function __construct()
     {
@@ -115,6 +120,18 @@ class Pilot
                 $statistic->setPilot(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
 
         return $this;
     }
