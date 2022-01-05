@@ -42,6 +42,8 @@ class PilotController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render('admin/pilot/create.html.twig');
+        return $this->render('admin/pilot/create.html.twig', [
+            'form'=>$form->createView()
+        ]);
     }
 }

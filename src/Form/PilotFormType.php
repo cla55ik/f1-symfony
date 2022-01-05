@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Comand;
+use App\Entity\Country;
 use App\Entity\Pilot;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +18,14 @@ class PilotFormType extends AbstractType
         $builder
             ->add('name')
             ->add('surname')
-            ->add('comand')
-            ->add('country')
+            ->add('comand', EntityType::class, [
+                'class'=>Comand::class
+            ])
+            ->add('country', EntityType::class, [
+                'class'=>Country::class,
+//                'choice_label'=>'country'
+            ])
+            ->add('submit', SubmitType::class)
         ;
     }
 
