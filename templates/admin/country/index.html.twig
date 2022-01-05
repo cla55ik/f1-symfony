@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
 {% block title %}All Countries!{% endblock %}
 
@@ -12,7 +12,7 @@
         <div>
             <a href="{{ path('admin_country_create') }}">create</a>
         </div>
-        <table>
+        <table class="admin__table">
             <tr>
                 <th>image</th>
                 <th>name</th>

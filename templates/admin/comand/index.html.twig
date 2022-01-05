@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
 {% block title %}All Commands!{% endblock %}
 
@@ -12,7 +12,7 @@
         <div>
             <a href="{{ path('admin_comand_create') }}">create</a>
         </div>
-        <table>
+        <table class="admin__table">
             <tr>
                 <th>image</th>
                 <th>name</th>
@@ -20,7 +20,7 @@
                 <th></th>
             </tr>
             {% for comand in comands %}
-                <tr>s
+                <tr>
                     <td><img src="{{ asset(constant('App\\Entity\\Comand::IMG_UPLOAD_DIR') ~ '/' ~ comand.img) }}"></td>
                     <td>{{ comand.name }}</td>
                     <td><a href="{{ path('admin_comand_update', {'id':comand.id}) }}">update</a></td>

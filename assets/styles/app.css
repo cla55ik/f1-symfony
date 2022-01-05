@@ -1,0 +1,51 @@
+body {
+    /*background-color: lightgray;*/
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --dark-red:#610102;
+    --light-red:#AD084F;
+    --dark-blue:#000084;
+    --light-blue:#4F00CD;
+}
+
+.admin__header{
+    background-color: var(--dark-blue);
+    padding: 20px;
+    color: #DDDDDD;
+}
+
+.admin__menu a {
+    color: #DDDDDD;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.admin__menu a:hover{
+    color: #fff;
+}
+
+.admin__table tr{
+    vertical-align: middle;
+}
+
+.admin__table a{
+    padding: 10px 35px;
+    background-color: var(--dark-red);
+    color: #DDDDDD;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.admin__table a:hover{
+    color: #fff;
+    background-color: var(--light-red);
+}
+
+.admin__table img{
+    width: 50px;
+    height: auto;
+    object-fit: cover;
+}

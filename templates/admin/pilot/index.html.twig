@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
 {% block title %}All Pilots!{% endblock %}
 
@@ -12,7 +12,7 @@
         <div>
             <a href="{{ path('admin_pilot_create') }}">create</a>
         </div>
-        <table>
+        <table class="admin__table">
             <tr>
                 <th>image</th>
                 <th>name</th>

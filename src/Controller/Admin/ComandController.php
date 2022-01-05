@@ -80,7 +80,7 @@ class ComandController extends AbstractController
 
         return $this->render('admin/comand/update.html.twig', [
             'form'=>$form->createView(),
-            'country'=>$comand
+            'comand'=>$comand
         ]);
 
     }
