@@ -20,7 +20,7 @@ class ComandRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Comand[] Returns an array of Comand objects
+    //  * @return comand[] Returns an array of comand objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ComandRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Comand
+    public function findOneBySomeField($value): ?comand
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

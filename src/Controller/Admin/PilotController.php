@@ -48,7 +48,9 @@ class PilotController extends AbstractController
                 $pilot->setImg($fileUploadService->upload($imgFile, Pilot::IMG_UPLOAD_DIR));
             }
 
-            if (empty($entityManager->getRepository(Pilot::class)->findBy(['name'=>$form->getData()->getName()]))){
+            if (empty($entityManager->getRepository(Pilot::class)->findBy(['name'=>$form->getData()->getName()]))
+                && empty($entityManager->getRepository(Pilot::class)->findBy(['surname'=>$form->getData()->getSurname()]))
+            ){
                 $entityManager->persist($pilot);
                 $entityManager->flush();
             }else{

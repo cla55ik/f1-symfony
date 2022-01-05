@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Commands!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <div>
+            <a href="{{ path('admin_comand_create') }}">create</a>
+        </div>
+        <table>
+            <tr>
+                <th>image</th>
+                <th>name</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for comand in comands %}
+                <tr>s
+                    <td><img src="{{ asset(constant('App\\Entity\\Comand::IMG_UPLOAD_DIR') ~ '/' ~ comand.img) }}"></td>
+                    <td>{{ comand.name }}</td>
+                    <td><a href="{{ path('admin_comand_update', {'id':comand.id}) }}">update</a></td>
+                    <td><a href="{{ path('admin_comand_delete', {'id':comand.id}) }}">delete</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

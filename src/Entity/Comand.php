@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ComandRepository::class)]
 class Comand
 {
+    const IMG_UPLOAD_DIR = 'uploads/comand';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -23,6 +25,9 @@ class Comand
 
     #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'comand')]
     private $country;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $img;
 
     public function __construct()
     {
@@ -89,6 +94,18 @@ class Comand
     public function setCountry(?Country $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
 
         return $this;
     }
