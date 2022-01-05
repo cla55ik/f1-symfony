@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Country;
 use App\Form\CountryFormType;
 use App\Repository\CountryRepository;
+use App\Service\CheckDuplicateNameService;
 use App\Service\FileUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class CountryController extends AbstractController
     }
 
     #[Route('/create', name: '_create')]
-    public function createCountry(Request $request, EntityManagerInterface $entityManager, FileUploadService $fileUploadService): Response
+    public function createCountry(Request $request, CheckDuplicateNameService $checkDuplicate,EntityManagerInterface $entityManager, FileUploadService $fileUploadService): Response
     {
         //TODO: проверка на Admin
         //TODO: проверка на Существование записи с таким Названием
@@ -35,13 +36,20 @@ class CountryController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             $country = $form->getData();
+
             $imgFile = $form->get('img')->getData();
 
             if ($imgFile){
                 $country->setImg($fileUploadService->upload($imgFile, Country::IMG_UPLOAD_DIR));
             }
-            $entityManager->persist($country);
-            $entityManager->flush();
+
+            if (empty($entityManager->getRepository(Country::class)->findBy(['name'=>$form->getData()->getName()]))){
+                $entityManager->persist($country);
+                $entityManager->flush();
+            }else{
+                $this->addFlash('error','Duplicate name');
+            }
+
         }
 
         return $this->render('admin/country/create.html.twig', [

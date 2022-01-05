@@ -47,8 +47,13 @@ class PilotController extends AbstractController
             if ($imgFile){
                 $pilot->setImg($fileUploadService->upload($imgFile, Pilot::IMG_UPLOAD_DIR));
             }
-            $entityManager->persist($pilot);
-            $entityManager->flush();
+
+            if (empty($entityManager->getRepository(Pilot::class)->findBy(['name'=>$form->getData()->getName()]))){
+                $entityManager->persist($pilot);
+                $entityManager->flush();
+            }else{
+                $this->addFlash('error','Duplicate name');
+            }
         }
 
         return $this->render('admin/pilot/create.html.twig', [
