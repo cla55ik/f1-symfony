@@ -39,9 +39,18 @@ class Pilot
     #[ORM\Column(type: 'integer', nullable: true)]
     private $number;
 
+    #[ORM\OneToMany(mappedBy: 'pilot', targetEntity: Racestat::class)]
+    private $racestats;
+
     public function __construct()
     {
         $this->statistics = new ArrayCollection();
+        $this->racestats = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName() . ' ' .$this->getSurname();
     }
 
     public function getId(): ?int
@@ -147,6 +156,36 @@ class Pilot
     public function setNumber(?int $number): self
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Racestat[]
+     */
+    public function getRacestats(): Collection
+    {
+        return $this->racestats;
+    }
+
+    public function addRacestat(Racestat $racestat): self
+    {
+        if (!$this->racestats->contains($racestat)) {
+            $this->racestats[] = $racestat;
+            $racestat->setPilot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRacestat(Racestat $racestat): self
+    {
+        if ($this->racestats->removeElement($racestat)) {
+            // set the owning side to null (unless already changed)
+            if ($racestat->getPilot() === $this) {
+                $racestat->setPilot(null);
+            }
+        }
 
         return $this;
     }

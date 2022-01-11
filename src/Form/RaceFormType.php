@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Country;
 use App\Entity\Race;
+use App\Entity\RaceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -25,6 +26,9 @@ class RaceFormType extends AbstractType
             ->add('country', EntityType::class, [
                 'class' => Country::class,
 
+            ])
+            ->add('type', EntityType::class, [
+                'class' => RaceType::class
             ])
             ->add('submit', SubmitType::class)
         ;

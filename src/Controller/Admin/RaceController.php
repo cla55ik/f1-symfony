@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 #[Route('/admin/race', name: 'admin_race')]
 class RaceController extends AbstractController
 {
@@ -58,7 +59,7 @@ class RaceController extends AbstractController
             $data = $form->getData();
 
             $race->setName($data->getName());
-
+            $race->setType($data->getType());
             $entityManager->persist($race);
             $entityManager->flush();
         }

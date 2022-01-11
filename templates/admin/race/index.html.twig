@@ -24,6 +24,7 @@
                     <td>{{ race.date|date('Y-m-d') }}</td>
                     <td><a href="{{ path('admin_race_update', {'id':race.id}) }}">update</a></td>
                     <td><a href="{{ path('admin_race_delete', {'id':race.id}) }}">delete</a></td>
+                    <td><a href="{{ path('admin_racestat_create', {'race_id':race.id}) }}">stat</a></td>
                 </tr>
             {% endfor %}
         </table>
