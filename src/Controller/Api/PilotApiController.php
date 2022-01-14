@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Pilot;
 use App\Repository\PilotRepository;
+use App\Service\ResponseService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +16,7 @@ use Symfony\Component\Serializer\Serializer;
 class PilotApiController extends AbstractController implements ApiFrontendInterface
 {
     #[Route('', name: '')]
-    public function getAll(EntityManagerInterface $entityManager): JsonResponse
+    public function getAll(EntityManagerInterface $entityManager, ResponseService $responseService): Response
     {
         $pilots = $entityManager->getRepository(Pilot::class)->findAll();
         foreach ($pilots as $pilot){
@@ -39,7 +40,10 @@ class PilotApiController extends AbstractController implements ApiFrontendInterf
         }
 
         $data['items'] = $arrayCollection;
-        return new JsonResponse($data);
+        $response = new JsonResponse($data);
+        $response = $responseService->setHeaders($response);
+        return $response;
+//        $response->headers->set()
     }
 
     #[Route('/{id}', name: '_id', requirements: ['id'=>'\d+'])]
