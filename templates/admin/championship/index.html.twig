@@ -9,12 +9,21 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/ivan/projects/api/backend_ivan5420/src/Controller/ChampionshipController.php'|file_link(0) }}">src/Controller/ChampionshipController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/ivan/projects/api/backend_ivan5420/templates/championship/index.html.twig'|file_link(0) }}">templates/championship/index.html.twig</a></code></li>
-    </ul>
+    <table class="admin__table">
+        <tr>
+            <th>name</th>
+            <th>point</th>
+            <th></th>
+        </tr>
+        {% for point in pilotPoint %}
+            <tr>
+                <td>{{ point.name }}</td>
+                <td>{{ point.point }}</td>
+{#                <td><a href="{{ path('admin_race_update', {'id':race.id}) }}">update</a></td>#}
+{#                <td><a href="{{ path('admin_race_delete', {'id':race.id}) }}">delete</a></td>#}
+{#                <td><a href="{{ path('admin_racestat_create', {'race_id':race.id}) }}">stat</a></td>#}
+            </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}

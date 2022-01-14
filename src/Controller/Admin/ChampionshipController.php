@@ -18,14 +18,14 @@ class ChampionshipController extends AbstractController
         $pilots = $entityManager->getRepository(Pilot::class)->findAll();
         $pilotPoint = [];
         foreach ($pilots as $pilot){
-            $pilotPoint[$pilot->getName() . ' ' .$pilot->getSurname()] = (int)$entityManager->getRepository(Racestat::class)->getPilotPoints($pilot->getId())[0][1] ?: 0;
+            $pilotPoint[] = ['name' => $pilot->getName() . ' ' .$pilot->getSurname(), 'point' => (int)$entityManager->getRepository(Racestat::class)->getPilotPoints($pilot->getId())[0][1] ?: 0];
 
         }
 //        dd($pilotPoint);
 
 
         return $this->render('admin/championship/index.html.twig', [
-            'controller_name' => 'ChampionshipController',
+            'pilotPoint' => $pilotPoint,
         ]);
     }
 }
