@@ -28,4 +28,17 @@ class FileUploadService
         return $newFilename;
     }
 
+    public function get(string $fileName, string $uploadDir): bool|string
+    {
+        $filePath = $uploadDir . '/' . $fileName;
+        return file_get_contents($filePath);
+    }
+
+    public function get64(string $fileName, string $uploadDir): string
+    {
+        $filePath = $uploadDir . '/' . $fileName;
+        $file = file_get_contents($filePath);
+        return base64_encode($file);
+    }
+
 }

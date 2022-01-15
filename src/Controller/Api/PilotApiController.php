@@ -2,11 +2,15 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Comand;
+use App\Entity\Country;
 use App\Entity\Pilot;
 use App\Repository\PilotRepository;
+use App\Service\FileUploadService;
 use App\Service\ResponseService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,11 +19,19 @@ use Symfony\Component\Serializer\Serializer;
 #[Route('/api/pilot', name: 'api_pilot')]
 class PilotApiController extends AbstractController implements ApiFrontendInterface
 {
+    public function __construct(
+        private FileUploadService $fileUploadService
+    )
+    {
+
+    }
+
     #[Route('', name: '')]
     public function getAll(EntityManagerInterface $entityManager, ResponseService $responseService): Response
     {
         $pilots = $entityManager->getRepository(Pilot::class)->findAll();
         foreach ($pilots as $pilot){
+//            dd($this->fileUploadService->get64($pilot->getImg(), Pilot::IMG_UPLOAD_DIR));
             $arrayCollection[] = array(
                 'id' => $pilot->getId(),
                 'name' => $pilot->getName(),
@@ -27,14 +39,14 @@ class PilotApiController extends AbstractController implements ApiFrontendInterf
                 'comand' => [
                     'id' => $pilot->getComand()->getId(),
                     'name' => $pilot->getComand()->getName(),
-                    'img' => $pilot->getComand()->getImg()
+                    'img' => $this->fileUploadService->get64($pilot->getComand()->getImg(), Comand::IMG_UPLOAD_DIR)
                 ],
                 'country' => [
                     'id' => $pilot->getCountry()->getId(),
                     'name' => $pilot->getCountry()->getName(),
-                    'img' => $pilot->getCountry()->getImg()
+                    'img' => $this->fileUploadService->get64($pilot->getCountry()->getImg(), Country::IMG_UPLOAD_DIR)
                 ],
-                'img' => $pilot->getImg(),
+                'img' => $this->fileUploadService->get64($pilot->getImg(), Pilot::IMG_UPLOAD_DIR),
                 'number' => $pilot->getNumber()
             );
         }
