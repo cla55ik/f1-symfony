@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ApiKeyRepository::class)]
 class ApiKey
 {
+    const PERMITTED_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
